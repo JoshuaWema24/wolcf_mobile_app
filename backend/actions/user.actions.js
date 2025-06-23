@@ -70,3 +70,11 @@ const getAllUsers = async (req, res) => {
     res.status(400).json({ message: 'Error retrieving users', error });
   }
 };
+
+exports = {
+  createUser,
+  updateUser,
+  deleteUser,
+  getUser,
+  getAllUsers
+};
