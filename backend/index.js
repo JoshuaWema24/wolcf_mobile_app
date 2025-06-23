@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const blogmodel = require('./models/blog.model');
+const usermodel = require('./models/user.model');
+const announcementmodel = require('./models/announcement.model');  
+const eventmodel = require('./models/event.model');
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
@@ -18,8 +21,8 @@ mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Define routes
 
+//routes
 import blogactions from './actions/blog.actions.js';
 app.post('/blogs', blogactions.createBlog);
 app.put('/blogs/:title', blogactions.updateBlog);
@@ -40,6 +43,13 @@ app.put('/announcements/:title', announcementactions.updateAnnouncement);
 app.delete('/announcements/:title', announcementactions.deleteAnnouncement);
 app.get('/announcements/:title', announcementactions.getAnnouncement);
 app.get('/announcements', announcementactions.getAllAnnouncements);
+
+import eventactions from './actions/event.actions.js';
+app.post('/events', eventactions.createEvent);
+app.put('/events/:title', eventactions.updateEvent);
+app.delete('/events/:title', eventactions.deleteEvent);
+app.get('/events/:title', eventactions.getEvent);
+app.get('/events', eventactions.getAllEvents);
 
 //start the server
 app.listen(PORT, () => {
