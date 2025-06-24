@@ -1,7 +1,8 @@
-const require = require('require');
+
 const mongoose = require('mongoose');   
 const Event = require('../models/event.model.js');
 const express = require('express');
+
 
 const createEvent = async (req, res) => {
     try {
@@ -65,9 +66,11 @@ const getAllEvents = async (req, res) => {
 }
 
 module.exports = {
-    createEvent,
-    updateEvent,
-    deleteEvent,
-    getEvent,
-    getAllEvents
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  getEvent,
+  getAllEvents
 };
+
+

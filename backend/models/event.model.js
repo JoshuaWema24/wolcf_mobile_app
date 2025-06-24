@@ -1,4 +1,4 @@
-const require = require('require');
+
 const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({

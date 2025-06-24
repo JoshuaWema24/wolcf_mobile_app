@@ -1,19 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const blogmodel = require('./models/blog.model');
-const usermodel = require('./models/user.model');
-const announcementmodel = require('./models/announcement.model');  
-const eventmodel = require('./models/event.model');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// MongoDB URI
+const MONGO_URI = 'mongodb://localhost:27017/WOLCF_MOBILE_APP';
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/Wolcf mobile app', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// MongoDB Connection
+mongoose.connect(MONGO_URI);
 mongoose.connection.on('error', (err) => {
   console.error('MongoDB connection error:', err);
 });
@@ -21,37 +21,55 @@ mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-
-//routes
-import blogactions from './actions/blog.actions.js';
+// blog routes
+const blogactions = require('./actions/blog.actions.js');
 app.post('/blogs', blogactions.createBlog);
 app.put('/blogs/:title', blogactions.updateBlog);
 app.delete('/blogs/:title', blogactions.deleteBlog);
 app.get('/blogs/:title', blogactions.getBlog);
 app.get('/blogs', blogactions.getAllBlogs);
 
-import useractions from './actions/user.actions.js';
+// User routes
+const useractions = require('./actions/user.actions.js');
 app.post('/users', useractions.createUser);
 app.put('/users/:name', useractions.updateUser);
 app.delete('/users/:name', useractions.deleteUser);
 app.get('/users/:name', useractions.getUser);
 app.get('/users', useractions.getAllUsers);
- 
-import announcementactions from './actions/announcement.actions.js';
+
+// Announcement routes
+const announcementactions = require('./actions/announcement.actions.js');
 app.post('/announcements', announcementactions.createAnnouncement);
 app.put('/announcements/:title', announcementactions.updateAnnouncement);
 app.delete('/announcements/:title', announcementactions.deleteAnnouncement);
 app.get('/announcements/:title', announcementactions.getAnnouncement);
 app.get('/announcements', announcementactions.getAllAnnouncements);
 
-import eventactions from './actions/event.actions.js';
+// Event routes
+const eventactions = require('./actions/event.actions.js');
 app.post('/events', eventactions.createEvent);
 app.put('/events/:title', eventactions.updateEvent);
 app.delete('/events/:title', eventactions.deleteEvent);
 app.get('/events/:title', eventactions.getEvent);
 app.get('/events', eventactions.getAllEvents);
 
-//start the server
+// Prayer routes
+const prayeractions = require('./actions/prayer.actions.js');
+app.post('/prayers', prayeractions.createPrayerRequest);
+app.put('/prayers/:id', prayeractions.updatePrayerRequest);
+app.delete('/prayers/:id', prayeractions.deletePrayerRequest);
+app.get('/prayers/:id', prayeractions.getPrayerRequest);
+app.get('/prayers', prayeractions.getAllPrayerRequests);
+
+// Sermon routes
+const sermonactions = require('./actions/sermon.actions.js');
+app.post('/sermons', sermonactions.createSermon);
+app.put('/sermons/:title', sermonactions.updateSermon);
+app.delete('/sermons/:title', sermonactions.deleteSermon);
+app.get('/sermons/:title', sermonactions.getSermon);
+app.get('/sermons', sermonactions.getAllSermons);
+
+// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

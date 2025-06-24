@@ -67,7 +67,7 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
-exports = {
+module.exports = {
   createBlog,
   updateBlog,
   deleteBlog,

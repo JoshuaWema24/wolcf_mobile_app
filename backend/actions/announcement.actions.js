@@ -64,7 +64,7 @@ const getAllAnnouncements = async (req, res) => {
     res.status(400).json({ message: 'Error retrieving announcements', error });
   }
 };
- exports = {
+ module.exports = {
   createAnnouncement,
   updateAnnouncement,
   deleteAnnouncement,
