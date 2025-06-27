@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
+import 'landingpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Splash Demo',
+      title: 'WOLCF App',
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
@@ -26,10 +28,25 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 4),
+      duration: const Duration(seconds: 5),
     )..repeat();
+
+    // Navigate to HomePage after 5 seconds
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: Duration(milliseconds: 700),
+          pageBuilder: (_, __, ___) => HomePage(),
+          transitionsBuilder: (_, animation, __, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
+      );
+    });
   }
 
   @override
@@ -51,23 +68,31 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         child: Center(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 'WOLCF',
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   fontSize: 60,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                   color: Colors.white,
                   letterSpacing: 2,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10,
+                      color: Colors.black54,
+                      offset: Offset(2, 2),
+                    ),
+                  ],
                 ),
               ),
-              const Text(
+              const SizedBox(height: 8),
+              Text(
                 'Word Of Life Christian Fellowship',
-                style: TextStyle(
-                  fontSize: 19,
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
                   color: Colors.white70,
-                  letterSpacing: 1.5,
+                  letterSpacing: 1.2,
                 ),
               ),
               const SizedBox(height: 40),
@@ -79,29 +104,23 @@ class _SplashScreenState extends State<SplashScreen>
                     child: child,
                   );
                 },
-                child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      Container(
-                        width: 50,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ],
+                child: Image.asset(
+                  'assets/cross.png',
+                  width: 60,
+                  height: 60,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 60),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  '"I am the way, the truth, and the life."\n- John 14:6',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white70,
                   ),
                 ),
               ),
