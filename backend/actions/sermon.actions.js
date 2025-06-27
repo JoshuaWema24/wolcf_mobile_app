@@ -3,7 +3,7 @@ const express = require("express");
 const Sermon = require("../models/sermon.model");
 
 // Create a new sermon
-const createSermon = async (req, res) => {
+exports.createSermon = async (req, res) => {
   try {
     const { title, preacher, date, mediaUrl, description } = req.body;
     const sermon = new Sermon({ title, preacher, date, mediaUrl, description });
@@ -15,7 +15,7 @@ const createSermon = async (req, res) => {
 };
 
 // Update a sermon
-const updateSermon = async (req, res) => {
+exports.updateSermon = async (req, res) => {
   try {
     const { title } = req.params;
     const { preacher, date, mediaUrl, description } = req.body;
@@ -34,7 +34,7 @@ const updateSermon = async (req, res) => {
 };
 
 // Delete a sermon
-const deleteSermon = async (req, res) => {
+exports.deleteSermon = async (req, res) => {
   try {
     const { title } = req.params;
     const sermon = await Sermon.findOneAndDelete({ title });
@@ -48,7 +48,7 @@ const deleteSermon = async (req, res) => {
 };
 
 // Get a sermon by title
-const getSermon = async (req, res) => {
+exports.getSermon = async (req, res) => {
   try {
     const { title } = req.params;
     const sermon = await Sermon.findOne({ title });
@@ -62,19 +62,11 @@ const getSermon = async (req, res) => {
 };
 
 // Get all sermons
-const getAllSermons = async (req, res) => {
+exports.getAllSermons = async (req, res) => {
   try {
     const sermons = await Sermon.find();
     res.json({ sermons });
   } catch (error) {
     res.status(400).json({ message: "Error fetching sermons", error });
   }
-};
-
-module.exports = {
-  createSermon,
-  updateSermon,
-  deleteSermon,
-  getSermon,
-  getAllSermons,
 };

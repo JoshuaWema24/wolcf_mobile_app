@@ -6,6 +6,7 @@ const { ref } = require('process');
 
 
 const PrayerRequestSchema = new mongoose.Schema({
+  prayerId: { type: mongoose.Schema.Types.ObjectId, auto: true },
   memberName: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   request: String,
   isAnonymous: Boolean,

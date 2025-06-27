@@ -5,7 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // MongoDB URI
-const MONGO_URI = 'mongodb://localhost:27017/WOLCF_MOBILE_APP';
+const MONGO_URI = 'process.env.MONGODB_URI';
 
 // Middleware
 app.use(express.json());
@@ -68,6 +68,14 @@ app.put('/sermons/:title', sermonactions.updateSermon);
 app.delete('/sermons/:title', sermonactions.deleteSermon);
 app.get('/sermons/:title', sermonactions.getSermon);
 app.get('/sermons', sermonactions.getAllSermons);
+
+// Testimony routes
+const testimonyactions = require('./actions/testimony.actions.js');
+app.post('/testimonies', testimonyactions.createTestimony);
+app.delete('/testimonies/:testimonyId', testimonyactions.deleteTestimony);
+app.get('/testimonies/:testimonyId', testimonyactions.getTestimony);
+app.get('/testimonies', testimonyactions.getTestimonies);
+
 
 // Start server
 app.listen(PORT, () => {
